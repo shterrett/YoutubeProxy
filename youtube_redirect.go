@@ -29,9 +29,15 @@ func (relay Relay) ServeHTTP(writer http.ResponseWriter, request *http.Request) 
   response.Body.Close()
 }
 
-
+func CheckLog() {
+  _, err := os.Lstat("log.txt")
+  if err != nil {
+    os.Create("log.txt")
+  }
+}
 
 func main() {
+  CheckLog()
   relay := Relay{}
   http.Handle("/", relay)
   http.ListenAndServe("localhost:4000", nil)
